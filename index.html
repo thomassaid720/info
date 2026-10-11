@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Thomas Saed | Digital Business Card</title>
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cairo:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    .link-item {
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    .link-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px -6px rgba(0, 0, 0, 0.08);
+      border-color: #cbd5e1;
+    }
+    
+    .link-item:active {
+      transform: scale(0.985);
+    }
+
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.03); opacity: 1; }
+      100% { transform: scale(0.95); opacity: 0.8; }
+    }
+
+    .pulse-save {
+      animation: pulse-ring 2.8s infinite ease-in-out;
+    }
+  </style>
+</head>
+<body class="bg-[#f1f3f6] text-slate-800 min-h-screen py-0 sm:py-8 flex justify-center items-start sm:items-center">
+
+  <!-- Main Card Container -->
+  <main class="w-full sm:max-w-[440px] bg-white min-h-screen sm:min-h-0 sm:rounded-[36px] shadow-2xl overflow-hidden flex flex-col relative sm:border sm:border-slate-200/90 transition-all">
+
+    <div class="relative w-full h-[370px] sm:h-[390px] bg-[#1a1b1e] overflow-hidden select-none">
+      
+      <!-- الصورة الرئيسية التي أرفقتها (1.jpg) -->
+      <img 
+        id="profile-img"
+        src="1.jpg"
+        alt="Thomas Saed" 
+        onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80';"
+        class="w-full h-full object-cover object-top transition-transform duration-700 ease-out hover:scale-105"
+      />
+      
+      <!-- Gradient Overlay -->
+      <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/25 pointer-events-none"></div>
+
+      <!-- منحنى الغطاء المطابق للصورة تماماً (Wave Cut) -->
+      <div class="absolute -bottom-1 left-0 right-0 w-full overflow-hidden leading-none z-10 pointer-events-none">
+        <svg viewBox="0 0 500 80" preserveAspectRatio="none" class="relative block w-full h-16 text-white fill-current">
+          <path d="M0,0 C170,90 330,5 500,75 L500,80 L0,80 Z"></path>
+        </svg>
+      </div>
+
+      <!-- Quick Share Button -->
+      <div class="absolute top-4 right-4 z-20">
+        <button onclick="shareProfile()" title="Share profile" class="w-10 h-10 rounded-full bg-black/45 backdrop-blur-md text-white flex items-center justify-center border border-white/20 hover:bg-black/70 transition active:scale-95 shadow-md">
+          <i class="fa-solid fa-arrow-up-from-bracket text-sm"></i>
+        </button>
+      </div>
+
+      <!-- شعار TS مع التاج مثل التصميم تماماً -->
+      <div class="absolute bottom-5 right-5 z-20 drop-shadow-2xl">
+        <div class="w-16 h-16 bg-[#2a2c30] border-2 border-white/95 rounded-2xl flex flex-col items-center justify-center p-1.5 shadow-2xl transition hover:rotate-2">
+          <!-- Crown -->
+          <svg class="w-5 h-4 text-white mb-0.5" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M5 16L3 5L8.5 10L12 4L15.5 10L21 5L19 16H5M19 19C19 19.6 18.6 20 18 20H6C5.4 20 5 19.6 5 19V18H19V19Z"/>
+          </svg>
+          <!-- TS Monogram -->
+          <span class="text-white font-black tracking-wider text-xl leading-none" style="font-family: system-ui;">TS</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="px-6 pt-3 pb-8 flex-1 flex flex-col">
+      
+      <!-- الاسم والخط الجانبي -->
+      <div class="flex items-center gap-3.5 mb-5 mt-1">
+        <div class="w-1.5 h-8 bg-zinc-900 rounded-full"></div>
+        <div>
+          <h1 class="text-2xl sm:text-[26px] font-extrabold tracking-tight text-zinc-900 leading-tight">
+            Thomas Saed
+          </h1>
+          <p class="text-[11px] font-bold text-zinc-400 uppercase tracking-wider">Digital Business Card</p>
+        </div>
+      </div>
+
+      <!-- زر حفظ جهة الاتصال السريع المباشر (Save Contact VCF) -->
+      <button onclick="downloadVCard()" class="pulse-save w-full mb-6 py-3.5 px-4 bg-zinc-900 hover:bg-black active:scale-[0.98] text-white rounded-2xl font-bold text-sm flex items-center justify-center gap-3 shadow-lg shadow-zinc-900/20 transition-all">
+        <i class="fa-solid fa-user-plus text-base"></i>
+        <span>Save Contact</span>
+      </button>
+
+      <div class="space-y-2.5">
+
+        <!-- Whatsapp 1 -->
+        <a href="https://api.whatsapp.com/send?phone=+201286790410" target="_blank" rel="noopener noreferrer" class="link-item group flex items-center justify-between p-3 bg-zinc-50/90 hover:bg-white rounded-2xl border border-zinc-200/90 shadow-sm">
+          <div class="flex items-center gap-3.5">
+            <div class="w-11 h-11 rounded-full bg-[#383a3d] text-white flex items-center justify-center text-xl shadow group-hover:bg-[#25D366] transition-colors duration-200">
+              <i class="fa-brands fa-whatsapp"></i>
+            </div>
+            <div class="flex flex-col text-left">
+              <span class="text-sm sm:text-base font-bold text-zinc-800">Whatsapp 1</span>
+              <span class="text-[11px] text-zinc-400 font-mono">01286790410</span>
+            </div>
+          </div>
+          <i class="fa-solid fa-arrow-up-right-from-square text-xs text-zinc-400 group-hover:text-zinc-700 transition"></i>
+        </a>
+
+        <!-- Whatsapp 2 -->
+        <a href="https://api.whatsapp.com/send?phone=+201282733975" target="_blank" rel="noopener noreferrer" class="link-item group flex items-center justify-between p-3 bg-zinc-50/90 hover:bg-white rounded-2xl border border-zinc-200/90 shadow-sm">
+          <div class="flex items-center gap-3.5">
+            <div class="w-11 h-11 rounded-full bg-[#383a3d] text-white flex items-center justify-center text-xl shadow group-hover:bg-[#25D366] transition-colors duration-200">
+              <i class="fa-brands fa-whatsapp"></i>
+            </div>
+            <div class="flex flex-col text-left">
+              <span class="text-sm sm:text-base font-bold text-zinc-800">Whatsapp 2</span>
+              <span class="text-[11px] text-zinc-400 font-mono">01282733975</span>
+            </div>
+          </div>
+          <i class="fa-solid fa-arrow-up-right-from-square text-xs text-zinc-400 group-hover:text-zinc-700 transition"></i>
+        </a>
+
+        <!-- Facebook (رابطك الحقيقي) -->
+        <a href="https://www.facebook.com/share/1CX1nsBYps/" target="_blank" rel="noopener noreferrer" class="link-item group flex items-center justify-between p-3 bg-zinc-50/90 hover:bg-white rounded-2xl border border-zinc-200/90 shadow-sm">
+          <div class="flex items-center gap-3.5">
+            <div class="w-11 h-11 rounded-full bg-[#383a3d] text-white flex items-center justify-center text-lg shadow group-hover:bg-[#1877F2] transition-colors duration-200">
+              <i class="fa-brands fa-facebook-f"></i>
+            </div>
+            <div class="flex flex-col text-left">
+              <span class="text-sm sm:text-base font-bold text-zinc-800">Facebook</span>
+              <span class="text-[11px] text-zinc-400">thomas.said</span>
+            </div>
+          </div>
+          <i class="fa-solid fa-arrow-up-right-from-square text-xs text-zinc-400 group-hover:text-zinc-700 transition"></i>
+        </a>
+
+        <!-- Instagram (رابطك الحقيقي) -->
+        <a href="http://instagram.com/thomas_saed_" target="_blank" rel="noopener noreferrer" class="link-item group flex items-center justify-between p-3 bg-zinc-50/90 hover:bg-white rounded-2xl border border-zinc-200/90 shadow-sm">
+          <div class="flex items-center gap-3.5">
+            <div class="w-11 h-11 rounded-full bg-[#383a3d] text-white flex items-center justify-center text-lg shadow group-hover:bg-[#E1306C] transition-colors duration-200">
+              <i class="fa-brands fa-instagram"></i>
+            </div>
+            <div class="flex flex-col text-left">
+              <span class="text-sm sm:text-base font-bold text-zinc-800">Instagram</span>
+              <span class="text-[11px] text-zinc-400">@thomas_saed_</span>
+            </div>
+          </div>
+          <i class="fa-solid fa-arrow-up-right-from-square text-xs text-zinc-400 group-hover:text-zinc-700 transition"></i>
+        </a>
+
+        <!-- Telegram 1 -->
+        <a href="https://telegram.me/+201286790410" target="_blank" rel="noopener noreferrer" class="link-item group flex items-center justify-between p-3 bg-zinc-50/90 hover:bg-white rounded-2xl border border-zinc-200/90 shadow-sm">
+          <div class="flex items-center gap-3.5">
+            <div class="w-11 h-11 rounded-full bg-[#383a3d] text-white flex items-center justify-center text-lg shadow group-hover:bg-[#229ED9] transition-colors duration-200">
+              <i class="fa-brands fa-telegram"></i>
+            </div>
+            <div class="flex flex-col text-left">
+              <span class="text-sm sm:text-base font-bold text-zinc-800">Telegram 1</span>
+              <span class="text-[11px] text-zinc-400 font-mono">01286790410</span>
+            </div>
+          </div>
+          <i class="fa-solid fa-arrow-up-right-from-square text-xs text-zinc-400 group-hover:text-zinc-700 transition"></i>
+        </a>
+
+        <!-- Telegram 2 -->
+        <a href="https://telegram.me/+201282733975" target="_blank" rel="noopener noreferrer" class="link-item group flex items-center justify-between p-3 bg-zinc-50/90 hover:bg-white rounded-2xl border border-zinc-200/90 shadow-sm">
+          <div class="flex items-center gap-3.5">
+            <div class="w-11 h-11 rounded-full bg-[#383a3d] text-white flex items-center justify-center text-lg shadow group-hover:bg-[#229ED9] transition-colors duration-200">
+              <i class="fa-brands fa-telegram"></i>
+            </div>
+            <div class="flex flex-col text-left">
+              <span class="text-sm sm:text-base font-bold text-zinc-800">Telegram 2</span>
+              <span class="text-[11px] text-zinc-400 font-mono">01282733975</span>
+            </div>
+          </div>
+          <i class="fa-solid fa-arrow-up-right-from-square text-xs text-zinc-400 group-hover:text-zinc-700 transition"></i>
+        </a>
+
+        <!-- Phone 1 (Call + Copy) -->
+        <div class="link-item flex items-center justify-between p-3 bg-zinc-50/90 rounded-2xl border border-zinc-200/90 shadow-sm">
+          <a href="tel:+201286790410" class="flex items-center gap-3.5 flex-1">
+            <div class="w-11 h-11 rounded-full bg-[#383a3d] text-white flex items-center justify-center text-lg shadow">
+              <i class="fa-solid fa-mobile-screen-button"></i>
+            </div>
+            <div class="flex flex-col text-left">
+              <span class="text-sm sm:text-base font-bold text-zinc-900 font-mono">01286790410</span>
+              <span class="text-[11px] text-zinc-400">mobile</span>
+            </div>
+          </a>
+          <button onclick="copyToClipboard('+201286790410', 'Number 1 copied!')" class="p-2.5 text-zinc-400 hover:text-zinc-900 transition active:scale-90" title="Copy">
+            <i class="fa-regular fa-copy text-base"></i>
+          </button>
+        </div>
+
+        <!-- Phone 2 (Call + Copy) -->
+        <div class="link-item flex items-center justify-between p-3 bg-zinc-50/90 rounded-2xl border border-zinc-200/90 shadow-sm">
+          <a href="tel:+201282733975" class="flex items-center gap-3.5 flex-1">
+            <div class="w-11 h-11 rounded-full bg-[#383a3d] text-white flex items-center justify-center text-lg shadow">
+              <i class="fa-solid fa-mobile-screen-button"></i>
+            </div>
+            <div class="flex flex-col text-left">
+              <span class="text-sm sm:text-base font-bold text-zinc-900 font-mono">01282733975</span>
+              <span class="text-[11px] text-zinc-400">mobile</span>
+            </div>
+          </a>
+          <button onclick="copyToClipboard('+201282733975', 'Number 2 copied!')" class="p-2.5 text-zinc-400 hover:text-zinc-900 transition active:scale-90" title="Copy">
+            <i class="fa-regular fa-copy text-base"></i>
+          </button>
+        </div>
+
+        <!-- Email -->
+        <div class="link-item flex items-center justify-between p-3 bg-zinc-50/90 rounded-2xl border border-zinc-200/90 shadow-sm">
+          <a href="mailto:thomassaid720@gmail.com" class="flex items-center gap-3.5 flex-1 min-w-0">
+            <div class="w-11 h-11 shrink-0 rounded-full bg-[#383a3d] text-white flex items-center justify-center text-lg shadow">
+              <i class="fa-solid fa-envelope"></i>
+            </div>
+            <div class="flex flex-col text-left truncate">
+              <span class="text-sm font-bold text-zinc-900 truncate">thomassaid720@gmail.com</span>
+              <span class="text-[11px] text-zinc-400">Email</span>
+            </div>
+          </a>
+          <button onclick="copyToClipboard('thomassaid720@gmail.com', 'Email copied!')" class="p-2.5 text-zinc-400 hover:text-zinc-900 transition active:scale-90 shrink-0" title="Copy">
+            <i class="fa-regular fa-copy text-base"></i>
+          </button>
+        </div>
+
+        <!-- Instapay Link (رابطك المباشر) -->
+        <a href="https://ipn.eg/S/thomas.said/instapay/5yxAxo" target="_blank" rel="noopener noreferrer" class="link-item group flex items-center justify-between p-3 bg-gradient-to-r from-zinc-50 to-purple-50/40 hover:from-white hover:to-purple-50/80 rounded-2xl border border-zinc-200/90 shadow-sm">
+          <div class="flex items-center gap-3.5">
+            <div class="w-11 h-11 rounded-full bg-[#383a3d] text-white flex items-center justify-center text-lg shadow group-hover:bg-[#6b21a8] transition-colors duration-200">
+              <i class="fa-solid fa-link"></i>
+            </div>
+            <div class="flex flex-col text-left">
+              <span class="text-sm sm:text-base font-bold text-zinc-900">Instapay</span>
+              <span class="text-[11px] text-purple-700 font-medium">Direct Transfer Link</span>
+            </div>
+          </div>
+          <span class="text-xs font-bold px-2.5 py-1 bg-purple-100 text-purple-800 rounded-lg group-hover:bg-purple-200 transition">Pay Now</span>
+        </a>
+
+      </div>
+
+      <footer class="mt-8 pt-4 text-center border-t border-zinc-100 flex flex-col items-center justify-center gap-1">
+        <p class="text-[11px] text-zinc-400 font-semibold uppercase tracking-widest flex items-center gap-1.5">
+          <i class="fa-solid fa-bolt text-amber-500"></i> Tap to Connect via NFC
+        </p>
+        <p class="text-xs text-zinc-400">Thomas Saed • All Rights Reserved</p>
+      </footer>
+
+    </div>
+  </main>
+
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-zinc-900/95 backdrop-blur-sm text-white px-5 py-2.5 rounded-full text-xs font-semibold shadow-2xl flex items-center gap-2 opacity-0 pointer-events-none transition-all duration-300 transform translate-y-3">
+    <i class="fa-solid fa-circle-check text-emerald-400 text-sm"></i>
+    <span id="toast-msg">Copied!</span>
+  </div>
+
+  <script>
+    // Safe clipboard copier
+    function copyToClipboard(text, successMessage = 'Copied!') {
+      try {
+        const temp = document.createElement('textarea');
+        temp.value = text;
+        temp.style.position = 'fixed';
+        temp.style.opacity = '0';
+        document.body.appendChild(temp);
+        temp.focus();
+        temp.select();
+        document.execCommand('copy');
+        document.body.removeChild(temp);
+        showToast(successMessage);
+      } catch (err) {
+        showToast(text);
+      }
+    }
+
+    // Toast message banner
+    let toastTimer;
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-msg');
+      toastMsg.textContent = message;
+      
+      clearTimeout(toastTimer);
+      toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-3');
+      toast.classList.add('opacity-100', 'translate-y-0');
+
+      toastTimer = setTimeout(() => {
+        toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-3');
+        toast.classList.remove('opacity-100', 'translate-y-0');
+      }, 2200);
+    }
+
+    // Share action
+    function shareProfile() {
+      if (navigator.share) {
+        navigator.share({
+          title: 'Thomas Saed - Contact Card',
+          text: 'Connect with Thomas Saed',
+          url: window.location.href,
+        }).catch(() => {});
+      } else {
+        copyToClipboard(window.location.href, 'Profile URL copied to clipboard!');
+      }
+    }
+
+    // Generate accurate vCard with all user details
+    function downloadVCard() {
+      const vCard = [
+        'BEGIN:VCARD',
+        'VERSION:3.0',
+        'N:Saed;Thomas;;;',
+        'FN:Thomas Saed',
+        'TEL;TYPE=CELL,VOICE:+201286790410',
+        'TEL;TYPE=WORK,VOICE:+201282733975',
+        'EMAIL;TYPE=PREF,INTERNET:thomassaid720@gmail.com',
+        'URL;TYPE=Facebook:https://www.facebook.com/thomas.said.75',
+        'URL;TYPE=Instagram:http://instagram.com/thomas_saed_',
+        'URL;TYPE=Instapay:https://ipn.eg/S/thomas.said/instapay/5yxAxo',
+        'NOTE:Saved from NFC Card',
+        'END:VCARD'
+      ].join('\r\n');
+
+      const blob = new Blob([vCard], { type: 'text/vcard;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.setAttribute('download', 'Thomas_Saed.vcf');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      showToast('Contact file ready to save! ✅');
+    }
+  </script>
+</body>
+</html>
